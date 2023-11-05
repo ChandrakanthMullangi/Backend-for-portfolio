@@ -64,7 +64,6 @@ app.post('/api/login', async (req, res) => {
       return res.status(401).json({ error: "Invalid Credentials" });
     }
 
-    // If the credentials are valid, generate and send a JWT token
     const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, { expiresIn: '1h' });
 
     res.status(200).json({ token: token });
@@ -163,7 +162,7 @@ app.get("/api/projects", verifyToken, async (req, res) => {
 })
 
 // API end point for get users
-app.use("/api/get-users", verifyToken, async (req, res) => {
+app.get("/api/get-users", verifyToken, async (req, res) => {
   try {
     const usersSnapshot = await db.collection("users").get();
     const usersList = []
